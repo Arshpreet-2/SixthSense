@@ -3,7 +3,7 @@
 // Free tier is enough for a demo; without the key the app falls back to its
 // on-phone answers and says so.
 
-const MODEL = 'gemini-2.0-flash';
+const MODEL = 'gemini-2.5-flash';
 
 const RULES = `You are the assistant inside SixthSense, a women's safety travel app used in India.
 

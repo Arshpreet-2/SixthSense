@@ -92,7 +92,8 @@ document.addEventListener("click", e => {
     vselfie:()=>{ S.v.checking=true; render(); stopSelfieCam();
       setTimeout(()=>{ Store.setVerified({method:S.v.method,email:S.v.email}); S.user.verified=true; S.v.idImg=null; S.v.checking=false; S.v.step=4; render(); },1600); },
     vdone:()=>{ S.v={step:0,method:null,email:"",code:"",linkSent:false,idImg:null,instr:"",checking:false,err:null};
-      if(S.stack.indexOf("ob3")>-1){ finish(); } else back(); },
+      if(S.stack.indexOf("ob3")>-1 || S.stack.indexOf("ob2")>-1){ finish(); return; }
+      back(); if(askStyleOnce()) return; },
     /* profile */
     repeattrip:()=>{ const tr=(S.trips||[])[+v]; if(!tr||!tr.place) return toast("That trip has no saved places.");
       S.travel.toPlace=tr.place; S.travel.to=tr.place.name;
@@ -351,8 +352,19 @@ document.addEventListener("input", e => {
 });
 function finish(){
   S.stack=[];
-  if(!S.user.style){ S.styleDraft = []; S.user.style = S.user.style || null; return go("style"); }
+  if(askStyleOnce()) return;
   tab("home");
+}
+
+/* Asked once, when an account is created — never on a later sign-in.
+   Called from every path that ends onboarding, because verifying and skipping
+   verification leave by different doors. */
+function askStyleOnce(){
+  if(S.user.style != null) return false;          // already answered, or skipped
+  if(!(S.user.name || "").trim()) return false;   // not a finished account yet
+  S.styleDraft = [];
+  go("style");
+  return true;
 }
 function syncContacts(){ Agent.setContacts(acts().map((c,i)=>({name:c.n, phone:c.p.replace(/\s/g,""), primary:i===0}))); }
 
@@ -884,7 +896,7 @@ async function findRoutes(){
     // Compare on what we already have, show it, then improve it once the
     // lighting and help-point data arrives. Waiting for Overpass first was
     // what made this take twenty seconds.
-    const finish = (lightReady) => {
+    const showComparison = (lightReady) => {
       try{
         // history comes from the backend; the local generator is only a fallback
         // for a signed-out demo, and it is labelled as simulated either way
@@ -932,11 +944,11 @@ async function findRoutes(){
       if(S.screen==="routes") render();
     };
 
-    finish(Light.hasArea && Light.hasArea(Light.boundsOf(coords)));
+    showComparison(Light.hasArea && Light.hasArea(Light.boundsOf(coords)));
 
     // and again, quietly, once the street data is in
     Light.loadFor(Light.boundsOf(coords))
-      .then(() => { if(S.screen==="routes" && T.result) finish(true); })
+      .then(() => { if(S.screen==="routes" && T.result) showComparison(true); })
       .catch(() => { if(T.result) { T.result.refining = false; if(S.screen==="routes") render(); } });
     return;
   }catch(err){ T.err = err.message; }

@@ -2,7 +2,7 @@
 // The key lives in Vercel (GEMINI_API_KEY), never in the app.
 // Without a key, the app falls back to on-phone keyword rules and says so.
 
-const MODEL = 'gemini-2.0-flash';
+const MODEL = 'gemini-2.5-flash';
 
 const RULES = `You read a short remark written by a woman about a street she just walked,
 and sometimes a photo of that street, for a women's safety travel app in India.

@@ -1,0 +1,158 @@
+{
+ "note": "Fallback help points around IGDTUW from OpenStreetMap (via Nominatim, Sept 2026). Used when the live lookup fails. Check before the demo.",
+ "points": [
+  {
+   "id": "f0",
+   "kind": "police",
+   "name": "Kotwali Police Station",
+   "lat": 28.6585978,
+   "lng": 77.2310844,
+   "phone": "",
+   "hours": ""
+  },
+  {
+   "id": "f1",
+   "kind": "police",
+   "name": "Police Post ISBT",
+   "lat": 28.6694198,
+   "lng": 77.2323235,
+   "phone": "",
+   "hours": ""
+  },
+  {
+   "id": "f2",
+   "kind": "police",
+   "name": "Police Station, Old Delhi Railway Station",
+   "lat": 28.6603874,
+   "lng": 77.2293263,
+   "phone": "",
+   "hours": ""
+  },
+  {
+   "id": "f3",
+   "kind": "police",
+   "name": "Police post, Gokhale Road",
+   "lat": 28.6664278,
+   "lng": 77.2269535,
+   "phone": "",
+   "hours": ""
+  },
+  {
+   "id": "f4",
+   "kind": "hospital",
+   "name": "Saint Stephen's Hospital",
+   "lat": 28.66615,
+   "lng": 77.2142494,
+   "phone": "",
+   "hours": ""
+  },
+  {
+   "id": "f5",
+   "kind": "hospital",
+   "name": "Sant Parmanand Hospital (Civil Lines)",
+   "lat": 28.6777216,
+   "lng": 77.224119,
+   "phone": "",
+   "hours": ""
+  },
+  {
+   "id": "f6",
+   "kind": "hospital",
+   "name": "Sushruta Trauma Centre",
+   "lat": 28.6797783,
+   "lng": 77.2283852,
+   "phone": "",
+   "hours": ""
+  },
+  {
+   "id": "f7",
+   "kind": "hospital",
+   "name": "Aruna Asaf Ali Government Hospital",
+   "lat": 28.6697661,
+   "lng": 77.2178501,
+   "phone": "",
+   "hours": ""
+  },
+  {
+   "id": "f8",
+   "kind": "metro",
+   "name": "Kashmere Gate Metro",
+   "lat": 28.6676254,
+   "lng": 77.2280795,
+   "phone": "",
+   "hours": ""
+  },
+  {
+   "id": "f9",
+   "kind": "metro",
+   "name": "Tis Hazari Metro",
+   "lat": 28.6671323,
+   "lng": 77.216628,
+   "phone": "",
+   "hours": ""
+  },
+  {
+   "id": "f10",
+   "kind": "metro",
+   "name": "Civil Lines Metro",
+   "lat": 28.6767184,
+   "lng": 77.2250249,
+   "phone": "",
+   "hours": ""
+  },
+  {
+   "id": "f11",
+   "kind": "fuel",
+   "name": "Hindustan Petroleum",
+   "lat": 28.6700559,
+   "lng": 77.2263858,
+   "phone": "",
+   "hours": ""
+  },
+  {
+   "id": "f12",
+   "kind": "fuel",
+   "name": "Bharat Petroleum, Sham Nath Marg side",
+   "lat": 28.6709608,
+   "lng": 77.226134,
+   "phone": "",
+   "hours": ""
+  },
+  {
+   "id": "f13",
+   "kind": "fuel",
+   "name": "Bharat Petroleum",
+   "lat": 28.6783149,
+   "lng": 77.2246778,
+   "phone": "",
+   "hours": ""
+  },
+  {
+   "id": "f14",
+   "kind": "bus stop",
+   "name": "ISBT bus stop",
+   "lat": 28.6712443,
+   "lng": 77.2311014,
+   "phone": "",
+   "hours": ""
+  },
+  {
+   "id": "f15",
+   "kind": "bus stop",
+   "name": "Metcalfe House bus stop",
+   "lat": 28.6805077,
+   "lng": 77.2283957,
+   "phone": "",
+   "hours": ""
+  },
+  {
+   "id": "f16",
+   "kind": "bus stop",
+   "name": "Old Delhi Railway Station bus stop",
+   "lat": 28.6597832,
+   "lng": 77.2313804,
+   "phone": "",
+   "hours": ""
+  }
+ ]
+}

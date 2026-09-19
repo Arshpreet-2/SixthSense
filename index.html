@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SixthSense</title>
+<meta name="description" content="SixthSense — Your Silent Protector. Understand what's around you, choose the safer route, and know exactly what to do if something goes wrong.">
+<meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="SixthSense">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="mobile-web-app-capable" content="yes">
+<meta property="og:title" content="SixthSense — Your Silent Protector">
+<meta property="og:description" content="Safe-route comparison, community audits, SOS and guardian tracking.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23E0218A'/%3E%3Cstop offset='1' stop-color='%236D2BD9'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M32 4.5 8.5 13.4v17.4c0 13.1 9.6 23.8 23.5 28.3 13.9-4.5 23.5-15.2 23.5-28.3V13.4z' fill='none' stroke='url(%23g)' stroke-width='4' stroke-linejoin='round'/%3E%3Ccircle cx='32' cy='30' r='4.6' fill='url(%23g)'/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23E0218A'/%3E%3Cstop offset='1' stop-color='%236D2BD9'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M32 4.5 8.5 13.4v17.4c0 13.1 9.6 23.8 23.5 28.3 13.9-4.5 23.5-15.2 23.5-28.3V13.4z' fill='none' stroke='url(%23g)' stroke-width='4' stroke-linejoin='round'/%3E%3Ccircle cx='32' cy='30' r='4.6' fill='url(%23g)'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=Hanken+Grotesk:wght@400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,600&display=swap">
+<link id="skin" rel="stylesheet" href="css/style-aurora.css">
+<script>try{var k=localStorage.getItem("ss.skin")||"aurora";var m={classic:"css/style-classic.css",studio:"css/style-studio.css",aurora:"css/style-aurora.css"};if(m[k])document.getElementById("skin").href=m[k];}catch(e){}</script>
+</head>
+<body>
+
+<!-- the whole app renders into #app; #device is the phone frame on desktop -->
+<div id="stage">
+  <div id="device">
+    <div id="app"></div>
+  </div>
+</div>
+
+<!-- load order matters: each file uses globals declared by the ones above it -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
+<script src="js/icons.js"></script>
+<script src="js/engine/native.js"></script>
+<script src="js/engine/hub.js"></script>
+<script src="js/engine/sound.js"></script>
+<script src="js/engine/light.js"></script>
+<script src="js/engine/mockdata.js"></script>
+<script src="js/engine/preference.js"></script>
+<script src="js/engine/context.js"></script>
+<script src="js/engine/normals.js"></script>
+<script src="js/engine/scoring.js"></script>
+<script src="js/engine/metro.js"></script>
+<script src="js/engine/reroute.js"></script>
+<script src="js/engine/journeys.js"></script>
+<script src="js/engine/instant.js"></script>
+<script src="js/engine/store.js"></script>
+<script src="js/engine/firebase.js"></script>
+<script src="js/engine/ask.js"></script>
+<script src="js/engine/agent.js"></script>
+<script src="js/data.js"></script>
+<script src="js/sensors.js"></script>
+<script src="js/map.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

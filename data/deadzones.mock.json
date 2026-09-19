@@ -1,0 +1,38 @@
+{
+ "note": "SIMULATED dead zones for the demo. Replace with zones from your own walks.",
+ "zones": [
+  {
+   "id": "z1",
+   "name": "Stretch near Kashmere Gate ISBT",
+   "lat": 28.668022,
+   "lng": 77.229244,
+   "radiusM": 90,
+   "operator": "all",
+   "avgMin": 4,
+   "timeBand": "evening",
+   "source": "SIM"
+  },
+  {
+   "id": "z2",
+   "name": "Underpass stretch, Gokhale Road side",
+   "lat": 28.667524,
+   "lng": 77.227377,
+   "radiusM": 90,
+   "operator": "all",
+   "avgMin": 3,
+   "timeBand": "any",
+   "source": "SIM"
+  },
+  {
+   "id": "z3",
+   "name": "Tree-covered lane near Sham Nath Marg",
+   "lat": 28.671554,
+   "lng": 77.226207,
+   "radiusM": 80,
+   "operator": "Jio",
+   "avgMin": 2,
+   "timeBand": "any",
+   "source": "SIM"
+  }
+ ]
+}

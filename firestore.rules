@@ -1,0 +1,154 @@
+rules_version = '2';
+// SixthSense security rules (free Spark plan: no server functions, so the rules do the work)
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() { return request.auth != null; }
+    function me() { return get(/databases/$(database)/documents/users/$(request.auth.uid)).data; }
+    function myTier() { return me().tier; }
+    function isAngelTier() { return myTier() in ['gold', 'partner', 'woman']; }
+
+    // Accounts: readable by the owner only; the fields that decide trust cannot be
+    // raised by the user herself (tier comes from verification, halo only +3 at a time)
+    match /users/{uid} {
+      allow read: if signedIn() && request.auth.uid == uid;
+      allow create: if signedIn() && request.auth.uid == uid
+                    && request.resource.data.halo == 0
+                    && request.resource.data.tier in ['gold', 'basic'];
+      allow update: if signedIn() && request.auth.uid == uid
+                    && request.resource.data.halo <= resource.data.halo + 10
+                    && request.resource.data.confirmed <= resource.data.confirmed + 1
+                    && (request.resource.data.tier == resource.data.tier
+                        || request.resource.data.tier in ['gold', 'woman', 'other', 'basic']);
+      allow delete: if false;
+    }
+
+    // Audits: anyone signed in may read them (they are what route comparisons use);
+    // only the author may write her own, and only with her real uid and tier
+    match /reports/{id} {
+      allow read: if signedIn();
+      allow create: if signedIn()
+                    && request.resource.data.by == request.auth.uid
+                    && request.resource.data.tier == myTier()
+                    && request.resource.data.expires <= request.time.toMillis() + 7200000;
+      // others may only add a confirmation, never change the claim
+      allow update: if signedIn()
+                    && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['confirmations', 'status']);
+      allow delete: if signedIn() && resource.data.by == request.auth.uid;
+    }
+
+    // Typical conditions per 50 m cell and hour, used to spot a street behaving
+    // unlike itself. No identities: counts and medians only, and every seeded
+    // row is marked sim so it can be told apart from real history.
+    match /normals/{id} {
+      allow read: if signedIn();
+      allow write: if signedIn() && request.resource.data.sim == true
+                   && request.resource.data.people >= 5;
+    }
+
+    // Demo fixtures: the guardians and sample data the demo accounts start with.
+    // Marked sim, readable by any member, and never used by a real sign-up.
+    match /demo/{id} {
+      allow read: if signedIn();
+      allow write: if signedIn() && request.resource.data.sim == true;
+    }
+
+    // Sample alerts used for the demo. Marked sim, readable by members.
+    match /alerts/{id} {
+      allow read: if signedIn();
+      allow write: if signedIn() && request.resource.data.sim == true;
+    }
+
+    // Watched mode: one record per trip, overwritten, deleted on arrival.
+    // Anyone holding the link can read it — that is the point of the link —
+    // but only she can write it, and only for her own trip.
+    match /watch/{token} {
+      allow read: if true;
+      allow create, update: if signedIn() && request.resource.data.by == request.auth.uid;
+      allow delete: if signedIn() && resource.data.by == request.auth.uid;
+    }
+
+    // Anonymous street coverage: counts only, no identity, no location beyond
+    // a 100 m cell, and a two-minute window.
+    match /coverage/{id} {
+      allow read: if true;
+      allow create, update: if signedIn()
+                            && request.resource.data.keys().hasOnly(['cell','window','t','devices','online']);
+      allow delete: if false;
+    }
+
+    // A short-lived code she shows so someone can vouch for her in person.
+    match /vouchcodes/{code} {
+      allow read: if signedIn();
+      allow create, update: if signedIn() && request.resource.data.uid == request.auth.uid
+                            && request.resource.data.expires <= request.time.toMillis() + 900000;
+      allow delete: if signedIn() && resource.data.uid == request.auth.uid;
+    }
+
+    // A vouch: only a Verified woman may give one, never to herself, and only
+    // she may withdraw it afterwards.
+    match /vouches/{id} {
+      allow read: if signedIn();
+      allow create: if signedIn() && isAngelTier()
+                    && request.resource.data.by == request.auth.uid
+                    && request.resource.data.forUid != request.auth.uid
+                    && request.resource.data.withdrawn == false;
+      allow update: if signedIn() && resource.data.by == request.auth.uid
+                    && request.resource.data.diff(resource.data).affectedKeys()
+                         .hasOnly(['withdrawn', 'withdrawnAt']);
+      allow delete: if false;
+    }
+
+    // Who is available to help, and roughly where (100 m, never exact).
+    // Only she may write her own presence; it goes stale by itself.
+    match /presence/{uid} {
+      allow read: if signedIn();
+      allow write: if signedIn() && request.auth.uid == uid
+                   && (request.method == 'delete'
+                       || (request.resource.data.by == request.auth.uid
+                           && request.resource.data.tier == myTier()
+                           && request.resource.data.until <= request.time.toMillis() + 600000));
+    }
+
+    // Angel Nearby and Walk Together sessions.
+    // Location is exchanged only inside a session, and only while it runs.
+    match /sessions/{sid} {
+      allow read: if signedIn();
+      allow create: if signedIn() && request.resource.data.by == request.auth.uid
+                    && request.resource.data.status == 'asked'
+                    && request.resource.data.angel == null
+                    && request.resource.data.expires <= request.time.toMillis() + 3600000;
+
+      // an Angel may take an open request, and only if she is a verified woman
+      allow update: if signedIn() && resource.data.status == 'asked'
+                    && isAngelTier()
+                    && request.resource.data.angel == request.auth.uid
+                    && request.resource.data.status == 'joined'
+                    && request.resource.data.by == resource.data.by;
+
+      // once joined, only the two of them may write, and only their own ping,
+      // the ending, or a rating
+      allow update: if signedIn()
+                    && (request.auth.uid == resource.data.by || request.auth.uid == resource.data.angel)
+                    && request.resource.data.diff(resource.data).affectedKeys()
+                         .hasOnly(['herePing', 'angelPing', 'status', 'endedBy', 'endedAt', 'rating']);
+      allow delete: if signedIn() && resource.data.by == request.auth.uid;
+    }
+
+    // Ask Angels: questions are readable by signed-in members so Angels nearby can answer
+    match /questions/{qid} {
+      allow read: if signedIn();
+      allow create: if signedIn() && request.resource.data.by == request.auth.uid;
+      allow update, delete: if signedIn() && resource.data.by == request.auth.uid;
+
+      // Only women-verified tiers may answer, and only once per question
+      match /answers/{aid} {
+        allow read: if signedIn();
+        allow create: if signedIn() && isAngelTier()
+                      && request.resource.data.by == request.auth.uid
+                      && request.resource.data.tier == myTier();
+        allow update, delete: if false;
+      }
+    }
+  }
+}

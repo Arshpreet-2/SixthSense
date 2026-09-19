@@ -1,5 +1,5 @@
 /* SixthSense service worker: keeps the app shell and pilot data available offline */
-const CACHE = 'sixthsense-web-v39';
+const CACHE = 'sixthsense-web-v40';
 const SHELL = ['./', 'index.html',
   'https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js', 'css/style-aurora.css', 'css/style-studio.css', 'css/style-classic.css', 'js/icons.js', 'js/data.js', 'js/sensors.js', 'js/map.js', 'js/i18n.js', 'js/ui.js', 'js/app.js',
   'js/engine/native.js', 'js/engine/hub.js', 'js/engine/sound.js', 'js/engine/light.js', 'js/engine/mockdata.js', 'js/engine/preference.js',

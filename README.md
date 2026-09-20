@@ -94,7 +94,7 @@ Media capture needs a secure context, so **opening `index.html` directly from di
 work** — the camera and microphone will silently stay simulated. Serve it instead:
 
 ```bash
-python3 -m http.server 8000
+python -m http.server 8000
 # then open http://localhost:8000
 ```
 

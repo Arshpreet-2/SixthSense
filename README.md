@@ -5,7 +5,7 @@ available for one specific trip using what the phone can sense right now, keeps 
 when the battery is nearly dead and the data has dropped, and lets the community log what
 they actually saw on the street.
 
-**Live demo:** _add your deployed URL here_
+**Live demo:** https://sixth-sense-75t17g5vi-arshpreet-2s-projects.vercel.app/
 
 ---
 
